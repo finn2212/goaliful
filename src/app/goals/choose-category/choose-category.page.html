@@ -8,11 +8,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>Choose Category</ion-text>
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+    <ion-item>
+      <h1>Kategorie</h1>
+      <p>Wähle eine Kategorie aus, die dein Ziel am besten beschreibt. Du kannst auch eine eigene Kategorie erstellen
+      </p>
+      <ion-label position="stacked">
+      </ion-label>
+
+    </ion-item>
+
+  </ion-list>
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-card (click)="selectCategory(1)">Arbeit und Karriere</ion-card>
+        <ion-card class="p-4" (click)="selectCategory(1)">Arbeit und Karriere</ion-card>
 
       </ion-col>
       <ion-col>

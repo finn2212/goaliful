@@ -102,10 +102,16 @@ export class TodoService {
     })
   }
 
-  async loadTodosAsync() {
-    if (await this.localDb.get('todos')) {
-      this._todos = await this.localDb.get('todos');
-    }
-
+  loadTodos() {
+    return new Promise((resolve, reject) => {
+      this.localDb.get('todos')
+        .then(todos => {
+          resolve(todos);
+          this._todos = todos
+        })
+        .catch(reject);
+    });
   }
+
+
 }

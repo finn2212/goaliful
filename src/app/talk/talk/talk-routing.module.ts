@@ -7,11 +7,16 @@ const routes: Routes = [
   {
     path: '',
     component: TalkPage
+  },
+  {
+    path: 'talk-detail',
+    loadChildren: () => import('../talk-detail/talk-detail.module').then(m => m.TalkDetailPageModule)
   }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TalkPageRoutingModule {}
+export class TalkPageRoutingModule { }

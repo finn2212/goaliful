@@ -22,22 +22,13 @@ const routes: Routes = [
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then(m => m.LoadingPageModule),
     canLoad: [AuthGuard]
-  },
-  {
-    path: 'profil',
-    loadChildren: () => import('./profil/profil/profil.module').then(m => m.ProfilPageModule),
-    canLoad: [AuthGuard]
-  },
-  {
-    path: 'development',
-    loadChildren: () => import('./development/development/development.module').then(m => m.DevelopmentPageModule),
-    canLoad: [AuthGuard]
-  },
-  {
-    path: 'feedback',
-    loadChildren: () => import('./feedback/feedback/feedback.module').then(m => m.FeedbackPageModule),
-    canLoad: [AuthGuard]
+  },  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   }
+
+
+
 
 ];
 @NgModule({

@@ -75,28 +75,33 @@ export class CalenderService {
 
 
   loadToArry() {
-    if (this.isDataloaded != true) {
-      this._events.forEach(element => {
-        console.log(element.title + "wird geladen")
-        element.startTime = new Date(element.startTime);
-        element.endTime = new Date(element.endTime);
-        element.allDay = true;
-        this.events.push(element);
-        console.log(element.title + "zum Kalender hinzugefügt")
-        this.isDataloaded = true;
-      });
+    if (this._events) {
+      if (this.isDataloaded != true) {
+        this._events.forEach(element => {
+          console.log(element.title + "wird geladen")
+          element.startTime = new Date(element.startTime);
+          element.endTime = new Date(element.endTime);
+          element.allDay = true;
+          this.events.push(element);
+          console.log(element.title + "zum Kalender hinzugefügt")
+          this.isDataloaded = true;
+        });
+      }
     }
+
 
   }
 
-  async loadEventsAsync() {
-
-    if (await this.localDb.get('events')) {
-      this._events = await this.localDb.get('events');
-      console.log(await this.localDb.get('events'));
-      console.log("Ausm Speicher init");
-
-
-    }
+  loadEvents() {
+    return new Promise((resolve, reject) => {
+      this.localDb.get('events')
+        .then(events => {
+          resolve(events);
+          this._events = events;
+        })
+        .catch(reject);
+    });
   }
+
+
 }

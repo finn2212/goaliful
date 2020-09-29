@@ -118,18 +118,7 @@ export class GoalsService {
     this.localDb.set('goals', this.goals.getValue());
   }
 
-
-
-  async loadGoalsAsync() {
-    if (await this.localDb.get('goals')) {
-      this._goals = await this.localDb.get('goals');
-
-    }
-
-  }
-
-
-  getSelectedGoal2() {
+  loadGoal() {
     return new Promise((resolve, reject) => {
       this.localDb.get('goals')
         .then(goals => {
@@ -140,31 +129,11 @@ export class GoalsService {
     });
   }
 
-  // loadToArry() {
-  //   if (this._goals) {
-  //     if (!this.isDataLoad) {
-  //       this._goals.forEach(element => {
-  //         this.goals.getValue().push(element);
-  //       });
-  //       this.isDataLoad = true;
-  //     }
-  //     else {
-  //       console.log("Goals sind schon geladen");
-  //     }
-  //   } else {
-  //     console.log("goals noch nicht geladen");
-  //     // this.router.navigateByUrl('/tabs/calender');
-  //   }
-  // }
-  loadToArry2() {
-
-    this._goals.forEach(element => {
-      this.goals.getValue().push(element);
-    });
-
+  loadToArry() {
+    if (this._goals) {
+      this._goals.forEach(element => {
+        this.goals.getValue().push(element);
+      });
+    }
   }
-  getSelectedGoal(): Goal {
-    return this.selectedGoal;
-  }
-
 }

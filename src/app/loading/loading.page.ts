@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CalenderService } from '../calendar/calender.service';
 import { GoalsService } from '../goals/goals.service';
 import { TodoService } from '../todos/todo.service';
-
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.page.html',
@@ -28,37 +27,22 @@ export class LoadingPage implements OnInit {
   wait2() {
 
     if (!this.dataLoaded) {
-      Promise.all([this.goalService.getSelectedGoal2()])
+      Promise.all([
+        this.goalService.loadGoal(),
+        this.todoService.loadTodos(),
+        this.calService.loadEvents()])
         .then(values => {
-          this.goalService.loadToArry2();
-          this.router.navigateByUrl('/tabs/dashboard');
+          this.goalService.loadToArry();
+          this.calService.loadToArry();
+          this.todoService.loadToArry();
+          this.router.navigateByUrl('/tabs/todos');
           this.dataLoaded = true;
         });
     } else {
-      this.router.navigateByUrl('/tabs/dashboard');
+      this.router.navigateByUrl('/tabs/todos');
     }
 
   }
 
-  wait() {
-    console.log(this.calService.isDataloaded);
-    if (!this.calService.isDataloaded) {
-      this.calService.loadEventsAsync();
-      this.goalService.loadGoalsAsync();
-      this.todoService.loadTodosAsync();
-      let TIME_IN_MS = 500;
-      let hideFooterTimeout = setTimeout(() => {
-        this.calService.loadToArry();
-        // this.goalService.loadToArry();
-        this.todoService.loadToArry();
-        let hideFooterTimeout = setTimeout(() => {
-          this.router.navigateByUrl('/tabs/dashboard');
 
-        }, TIME_IN_MS);
-
-      }, TIME_IN_MS);
-    }
-    // this.router.navigateByUrl('/tabs/calender');
-
-  }
 }

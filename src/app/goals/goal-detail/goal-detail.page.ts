@@ -38,10 +38,6 @@ export class GoalDetailPage implements OnInit {
   ionViewWillEnter() {
     this.goal = this.goalsService.selectedGoal;
     this.getTodosFromGoal();
-    console.log(this.goal.progress);
-    console.log(this.goal.todoIds.length);
-
-
   }
 
   async onSubmit(form: NgForm) {

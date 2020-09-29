@@ -15,8 +15,27 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+  <ion-toolbar>
 
-  <ion-content>
 
-  </ion-content>
+  </ion-toolbar>
+
+
+  <ng-container *ngFor="let blog of bloglist">
+
+    <ion-card (click)="onTalkItemSelected(blog)">
+
+      <ion-card-header>
+        <ion-card-subtitle>{{blog.title}}</ion-card-subtitle>
+        <ion-card-subtitle>{{blog.text}}</ion-card-subtitle>
+
+
+      </ion-card-header>
+    </ion-card>
+
+  </ng-container>
+
+
+</ion-content>
