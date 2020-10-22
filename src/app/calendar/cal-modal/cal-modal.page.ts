@@ -9,13 +9,16 @@ import { CalendarComponent } from 'ionic2-calendar';
   styleUrls: ['./cal-modal.page.scss'],
 })
 export class CalModalPage implements AfterViewInit {
+  eventSource = [];
+  viewTitle: string;
+
   calendar = {
     mode: 'month',
     currentDate: new Date()
   };
   @ViewChild(CalendarComponent) myCal2: CalendarComponent;
 
-  viewTitle: string;
+
 
   event = {
     title: '',

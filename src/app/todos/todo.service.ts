@@ -55,6 +55,9 @@ export class TodoService {
     }
   }
   deleteTodo(index: number) {
+    
+    //console.log(this.taskList.getValue()[index].id);
+    this.calService.deleteCalenderItem(this.taskList.getValue()[index].id);
     this.taskList.getValue().splice(index, 1);
     this.updateTodos();
   }

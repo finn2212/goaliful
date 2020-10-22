@@ -19,6 +19,22 @@ export class CalenderService {
 
 
   }
+  deleteCalenderItem(externalId: string) {
+    let toDelete;
+    this.events.forEach(function (el, index, object) {
+      console.log(el.externalId);
+      if (el.externalId == externalId) {
+        toDelete = index;
+
+      }
+
+    });
+
+    this.events.splice(toDelete);
+    console.log(toDelete);
+    toDelete = "";
+  }
+
 
   addEventToCalendar(calitem: Calitem) {
     let isEdit = true;

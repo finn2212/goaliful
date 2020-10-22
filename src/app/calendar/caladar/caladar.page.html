@@ -57,11 +57,14 @@
   <ng-template #template2 let-showEventDetail="showEventDetail" let-selectedDate="selectedDate"
     let-noEventsLabel="noEventsLabel">
     <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
-      <ion-item *ngFor="let event of selectedDate?.events" (click)="onEventSelected($event)">
+      <ion-item *ngFor="let event of selectedDate?.events">
+        <ion-button (click)="deleteCalenderItem(event.externalId)">
 
+        </ion-button>
         <span *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn">{{event.startTime|date: 'hh:mm'}}
           -
           {{event.endTime|date: 'hh:mm'}}
+
         </span>
         <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{allDayLabel}}</span>
         <span class="event-detail"> {{event.title}}</span>

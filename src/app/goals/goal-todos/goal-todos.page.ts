@@ -40,7 +40,9 @@ export class GoalTodosPage implements OnInit {
 
   continue() {
     this.newTodos.forEach(el => {
-      this.goalService.newGoalTodos.push(el);
+      if (!this.goalService.newGoalTodos.includes(el)) {
+        this.goalService.newGoalTodos.push(el);
+      }
     })
 
     this.router.navigateByUrl('/tabs/goals/new-goal-submit');

@@ -24,27 +24,32 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
 .cal-modal {
-  --height: 80%;
+  --height: 62%;
   --border-radius: 10px;
   padding: 25px;
 }
-.journal-modal{
-  --height:95%;
-  
+
+.journal-modal {
+  --height: 95%;
+
 }
+
 ion-picker {
   touch-action: none;
 }
+
 :root {
   --ion-safe-area-top: 20px;
   --ion-safe-area-bottom: 22px;
 }
+
 .pop-over-style {
   .popover-content {
-      //width: 80% !important; - this wont work or the bottom one.
-      --width: 300px !important;
-      --backdrop-opacity:0.33 !important;
-      
+    //width: 80% !important; - this wont work or the bottom one.
+    --width: 300px !important;
+    --backdrop-opacity: 0.33 !important;
+
   }
 }

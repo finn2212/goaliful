@@ -32,7 +32,10 @@ export class CaladarPage implements OnInit {
     this.myCal.loadEvents();
   }
 
-
+deleteCalenderItem(externalId){
+  
+  this.calService.deleteCalenderItem(externalId);
+}
 
   getEntries() {
     this.calService.loadToArry();
