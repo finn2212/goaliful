@@ -24,10 +24,12 @@ export class GoalsService {
   newGoalCategory;
   newGoalSteps: Array<GoalStep> = [];
   newGoalDesc: string;
+  newGoalPic;
   selectedGoal: Goal;
   newGoalStartDate: Date;
   newGoalEndDate: Date;
   newGoalTodos: Array<Todo> = [];
+  newGoalPrio: number;
   promiseGoals: [];
 
 
@@ -46,11 +48,12 @@ export class GoalsService {
 
 
   createGoal() {
-    const goal = new Goal(this.newGoalName, this.newGoalWhy, this.newGoalTodos.length);
+    const goal = new Goal(this.newGoalName, this.newGoalWhy, this.newGoalTodos.length, this.newGoalPrio);
     console.log("goal Created with Uid: " + goal.id)
     goal.steps = this.newGoalSteps;
     goal.category = this.newGoalCategory;
     goal.desc = this.newGoalDesc;
+    goal.picture = this.newGoalPic;
     if (this.newGoalStartDate) {
       goal.startTime = this.newGoalStartDate;
     }
@@ -65,7 +68,7 @@ export class GoalsService {
     if (this.newGoalTodos.length > 0) {
       this.newGoalTodos.forEach(el => {
         goal.todoIds.push(el.id);
-
+        el.externalId = goal.id;
       })
       this.todoService.addTodoList(this.newGoalTodos);
 
@@ -79,6 +82,8 @@ export class GoalsService {
     this.newGoalEndDate = null;
     this.newGoalEndDate = null;
     this.newGoalTodos = [];
+    this.newGoalPic = "";
+    this.goals.getValue().sort(this.sortGoals('prio'));
     this.router.navigateByUrl('/tabs/goals');
 
   }
@@ -87,13 +92,15 @@ export class GoalsService {
       if (this.checkIfDone(goal) == true) {
         goal.activ = false;
       }
-    })
+    });
   }
   private checkIfDone(goal: Goal) {
-    let isDone = false
-    if (this.todoService.getTodosFromGoal(goal.todoIds).length == 0 && goal.todoIds.length > 0) {
-      isDone = true
-    }
+    let isDone = true
+    let todos = this.todoService.getTodosFromGoal(goal.todoIds);
+    todos.forEach(element => {
+      if (!element.done)
+        isDone = false
+    });
 
     return isDone;
   }
@@ -110,14 +117,45 @@ export class GoalsService {
         el.progress = el.progress + 1;
       }
     })
-
+    this.updateGoal();
   }
 
 
   public updateGoal() {
     this.localDb.set('goals', this.goals.getValue());
   }
+  public deleteGoal(goal: Goal) {
+    this.todoService.deleteAllTodosFromGoal(goal);
+    const index: number = this.goals.getValue().indexOf(goal);
+    if (index !== -1) {
+      this.goals.getValue().splice(index, 1);
+    }
+    this.updateGoal();
 
+  }
+  sortGoals(key, order = 'asc') {
+    return function innerSort(a, b) {
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        // property doesn't exist on either object
+        return 0;
+      }
+
+      const varA = (typeof a[key] === 'string')
+        ? a[key].toUpperCase() : a[key];
+      const varB = (typeof b[key] === 'string')
+        ? b[key].toUpperCase() : b[key];
+
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order === 'desc') ? (comparison * -1) : comparison
+      );
+    };
+  }
   loadGoal() {
     return new Promise((resolve, reject) => {
       this.localDb.get('goals')

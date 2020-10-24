@@ -1,75 +1,97 @@
 <ion-header>
-  <ion-toolbar>
+    <ion-toolbar>
 
-    <ion-title>Details</ion-title>
+        <ion-title>Details</ion-title>
 
-    <ion-buttons slot="start">
-      <ion-back-button text="Back" [icon]="buttonIcon">
-      </ion-back-button>
-    </ion-buttons>
-    <ion-button *ngIf="!mode" (click)="changeMode()" fill="clear" slot="end">Bearbeiten</ion-button>
-    <ion-button *ngIf="mode" (click)="changeMode()" fill="clear" slot="end">Speichern</ion-button>
-  </ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="Back" [icon]="buttonIcon">
+            </ion-back-button>
+        </ion-buttons>
+        <ion-button *ngIf="!mode" (click)="changeMode()" fill="clear" slot="end">Bearbeiten</ion-button>
+        <ion-button *ngIf="mode" (click)="changeMode()" fill="clear" slot="end">Speichern</ion-button>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
 
-      <ion-item>
-        <ion-label> Ziel: </ion-label>
-        <ion-label>{{goal.name}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label> Warum: </ion-label>
-        <ion-label>{{ goal.why }}
-        </ion-label>
-      </ion-item>
+            <ion-item>
+                <ion-label> Ziel: {{goal.name}} </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label> Warum: {{ goal.why }} </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label> Kategorie: {{ goal.category }} </ion-label>
+            </ion-item>
 
-      <ion-item-divider></ion-item-divider>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+                <ion-text>
+                    <p>Beschreibung:</p>
+                    <p>{{goal.desc}}</p>
+                </ion-text>
+            </ion-item>
 
 
-      <ion-item>
-        <ion-label>Beschreibung</ion-label>
-      </ion-item>
-      <ion-item>
 
-        <p>{{goal.desc}}</p>
+            <ion-item-divider></ion-item-divider>
 
-      </ion-item>
+            <ion-item>
+                <ion-label>Todos:
+                </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>Fortschritt: {{done}}/{{done+notDone}}
+                </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-input type="text" placeholder="Enter Todo" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="newTodoName">
+                </ion-input>
+                <ion-button fill="clear" size="default" (click)="showPicker()">Prio: {{prio}}</ion-button>
+                <div class="item-note" item-end>
+                    <ion-button color="primary" (click)="addTodo()">
+                        <ion-icon name="add"></ion-icon>
+                    </ion-button>
+                </div>
+            </ion-item>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+                <ion-label>Ausstehende Todos</ion-label>
+            </ion-item>
 
-      <ion-item-divider></ion-item-divider>
+            <ng-container *ngFor="let todo of goalTodos">
+                <ion-item *ngIf="!todo.done">
+                    <ion-label>
+                        {{todo.name}}
+                    </ion-label>
+                    <ion-note slot="end">{{todo.prio}}</ion-note>
+                </ion-item>
+            </ng-container>
 
-      <ion-item>
-        <ion-label>Todos:
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Fortschritt: {{todosDone}}/{{goal.progress}}
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-input type="text" placeholder="Enter task" [ngModelOptions]="{standalone: true}" [(ngModel)]="newTodoName">
-        </ion-input>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+                <ion-label>Erledigte Todos</ion-label>
+            </ion-item>
+            <ng-container *ngFor="let todo of goalTodos">
+                <ion-item *ngIf="todo.done">
+                    <ion-label>
+                        {{todo.name}}
+                    </ion-label>
+                    <ion-note slot="end">{{todo.prio}}</ion-note>
+                </ion-item>
+            </ng-container>
+            <ion-item-divider></ion-item-divider>
+        </ion-list>
 
-        <div class="item-note" item-end>
-          <ion-button color="primary" (click)="addTodo()">
-            <ion-icon name="add"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-item>
-      <ion-item *ngFor="let todo of goalTodos">
-        <ion-label>{{todo.name}}</ion-label>
-      </ion-item>
-      <ion-item-divider></ion-item-divider>
-    </ion-list>
-
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-button type="submit" color="dark" expand="block" *ngIf="mode">
-          Ziel Speichern
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-button type="submit" color="dark" expand="block" *ngIf="mode">
+                    Ziel Speichern
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>

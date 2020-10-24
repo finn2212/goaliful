@@ -30,18 +30,27 @@
     <ng-container *ngFor="let goal of goals">
       <ng-container *ngIf=goal.activ>
         <ion-card (click)="onGoalSelected(goal)">
-          <img src="assets/img/apple.png">
+          <img src="{{goal.picture}}">
           <ion-card-header>
+            <ion-card-subtitle>Priorität {{goal.prio}}</ion-card-subtitle>
             <ion-card-title>{{goal.name }}</ion-card-title>
-            <ion-card-subtitle>{{goal.why}}</ion-card-subtitle>
-            <ion-card-subtitle>{{goal.category}}</ion-card-subtitle>
-            <ul>
-              <li *ngFor="let step of goal.steps">{{step.name}};</li>
-            </ul>
-            <ion-button size="small" (click)="finischGoal(goal)">Abschließen</ion-button>
-            <ion-button size="small" (click)="deleteGoal(goal)">Löschen</ion-button>
           </ion-card-header>
+          <ion-card-content>
+            {{goal.why}}
+            {{goal.desc}}
+          </ion-card-content>
+          <ion-item class="ion-activated">
+            <ion-icon name="flag" slot="start"></ion-icon>
+
+            <ion-label (click)="finischGoal(goal)">Ziel beenden</ion-label>
+          </ion-item>
+          <ion-item class="ion-activated">
+            <ion-icon name="trash" slot="start"></ion-icon>
+
+            <ion-label (click)="deleteGoal(goal)">Ziel Löschen</ion-label>
+          </ion-item>
         </ion-card>
+
       </ng-container>
     </ng-container>
   </ng-container>
@@ -49,17 +58,22 @@
     <ng-container *ngFor="let goal of goals">
       <ng-container *ngIf=!goal.activ>
         <ion-card (click)="onGoalSelected(goal)">
+          <img src="{{goal.picture}}">
           <ion-card-header>
-            <ion-card-title>{{goal.name}}</ion-card-title>
-            <ion-card-subtitle>{{goal.why}}</ion-card-subtitle>
-            <ion-card-subtitle>{{goal.category}}</ion-card-subtitle>
-            <ul>
-              <li *ngFor="let step of goal.steps">{{step.name}};</li>
-            </ul>
-            <ion-button size="small" (click)="finischGoal(goal)">Abschließen</ion-button>
-            <ion-button size="small" (click)="deleteGoal(goal)">Löschen</ion-button>
+            <ion-card-subtitle>Priorität {{goal.prio}}</ion-card-subtitle>
+            <ion-card-title>{{goal.name }}</ion-card-title>
           </ion-card-header>
+          <ion-card-content>
+            {{goal.why}}
+            {{goal.desc}}
+          </ion-card-content>
+
+          <ion-item class="ion-activated">
+            <ion-icon name="trash" slot="start"></ion-icon>
+            <ion-label (click)="deleteGoal(goal)">Ziel Löschen</ion-label>
+          </ion-item>
         </ion-card>
+
       </ng-container>
     </ng-container>
   </ng-container>

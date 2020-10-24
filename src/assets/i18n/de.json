@@ -1,18 +1,26 @@
 {
-  "TODOS": "Aufgaben",
-  "MYGOALS": "Meine Ziele",
-  "TITLE_2": "Hallo {{value}}",
-  "description": "Ohh habe ich gerade den Text Übersetzt? ?",
-  "data": {
-    "name": "Mein Name ist: {{name_value}}"
-  },
-  "SELECTLANGUAGE": "Sprache Auswählen",
-  "ENTERVALUES": "Werte Eingeben",
-  "CALCULATION": "Berechnung",
-  "USERINFO": "Benuter Info",
-  "LOGOUT": "Ausloggen",
-  "SETTINGS": "Einstellungen",
-  "ENGLISH": "Englisch",
-  "GERMAN": "Deutsch",
-  "FRENCH": "Französich"
+    "TODOS": "Aufgaben",
+    "MYGOALS": "Meine Ziele",
+    "TITLE_2": "Hallo {{value}}",
+    "description": "Ohh habe ich gerade den Text Übersetzt? ?",
+    "data": {
+        "name": "Mein Name ist: {{name_value}}"
+    },
+    "SELECTLANGUAGE": "Sprache Auswählen",
+    "ENTERVALUES": "Werte Eingeben",
+    "CALCULATION": "Berechnung",
+    "USERINFO": "Benuter Info",
+    "LOGOUT": "Ausloggen",
+    "SETTINGS": "Einstellungen",
+    "ENGLISH": "Englisch",
+    "GERMAN": "Deutsch",
+    "FRENCH": "Französich",
+
+    "LOGIN": "Einloggen",
+    "SIGNUP": "Registrieren",
+    "VALID_ADRESS": "Dies ist keine Valiede Email Adresse",
+    "VALID_PW": "Passwort sollte mindestns 6 zeichen lange sein",
+    "TO_SINGUP": "Zum Regirstieren",
+    "To_LOGIN": "Zum Einloggen"
+
 }

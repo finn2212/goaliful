@@ -51,10 +51,6 @@ export class GoalsPage implements OnInit {
     this.goalsService.updateGoal();
   }
   deleteGoal(goal: Goal) {
-    const index: number = this.goals.indexOf(goal);
-    if (index !== -1) {
-      this.goals.splice(index, 1);
-    }
-    this.goalsService.updateGoal();
+    this.goalsService.deleteGoal(goal);
   }
 }

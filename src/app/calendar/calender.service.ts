@@ -21,18 +21,21 @@ export class CalenderService {
   }
   deleteCalenderItem(externalId: string) {
     let toDelete;
+    console.log(this.events.length);
     this.events.forEach(function (el, index, object) {
       console.log(el.externalId);
       if (el.externalId == externalId) {
+        console.log(el.externalId);
         toDelete = index;
 
       }
 
     });
 
-    this.events.splice(toDelete);
+    this.events.splice(toDelete, 1);
     console.log(toDelete);
     toDelete = "";
+    this.storeEvents();
   }
 
 

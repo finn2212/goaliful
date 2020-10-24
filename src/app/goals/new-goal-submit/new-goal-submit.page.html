@@ -1,49 +1,57 @@
 <ion-header>
-  <ion-toolbar>
+    <ion-toolbar>
 
-    <ion-title>Zusammenfassung</ion-title>
+        <ion-title>Zusammenfassung</ion-title>
 
-    <ion-buttons slot="start">
-      <ion-back-button text="Back" [icon]="buttonIcon">
-      </ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="Back" [icon]="buttonIcon">
+            </ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
 
-      <ion-item>
-        <ion-label> Ziel: </ion-label>
-        <ion-label> {{ newGoalName }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label> Warum: </ion-label>
-        <ion-label> {{ newGoalWhy }}
-        </ion-label>
-      </ion-item>
-
-      <ion-item-divider></ion-item-divider>
-      <ion-item>
-        <ion-textarea ngModel name="desc" placeholder="Füge deinem Ziel eine Beschreibung hinzu..."></ion-textarea>
-      </ion-item>
-      <ion-item-divider></ion-item-divider>
-      <ion-item>
-        <ion-label>Todos für dein Ziel:</ion-label>
-      </ion-item>
-      <ion-item *ngFor="let todo of todos">
-        {{todo.name}}
-      </ion-item>
-    </ion-list>
+            <ion-item>
+                <ion-label> Ziel: {{ newGoalName }} </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label> Warum: {{ newGoalWhy }}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label> Kategorie: {{ newGoalCategory }}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label> Priorität: {{ newGoalPrio}}</ion-label>
+            </ion-item>
 
 
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-button type="submit" color="dark" expand="block" [disabled]="!f.valid">
-          Ziel Speichern
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+                <ion-textarea ngModel name="desc" placeholder="Füge deinem Ziel eine Beschreibung hinzu...">
+                </ion-textarea>
+            </ion-item>
+            <ion-item-divider></ion-item-divider>
+            <ion-item>
+                <ion-label>Todos für dein Ziel:</ion-label>
+            </ion-item>
+            <ion-item *ngFor="let todo of todos">
+                <ion-label>
+                    {{todo.name}}
+                </ion-label>
+                <ion-note slot="end">{{todo.prio}}</ion-note>
+            </ion-item>
+        </ion-list>
+
+
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-button type="submit" color="dark" expand="block" [disabled]="!f.valid">
+                    Ziel Speichern
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>

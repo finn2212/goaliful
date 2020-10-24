@@ -31,6 +31,14 @@ const routes: Routes = [
   {
     path: 'goal-todos',
     loadChildren: () => import('./goal-todos/goal-todos.module').then( m => m.GoalTodosPageModule)
+  },
+  {
+    path: 'new-goal-pic',
+    loadChildren: () => import('./new-goal-pic/new-goal-pic.module').then( m => m.NewGoalPicPageModule)
+  },
+  {
+    path: 'new-goal-prio',
+    loadChildren: () => import('./new-goal-prio/new-goal-prio.module').then( m => m.NewGoalPrioPageModule)
   }
 ];
 

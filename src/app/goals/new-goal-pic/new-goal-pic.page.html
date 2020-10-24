@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Back" [icon]="buttonIcon">
+      </ion-back-button>
+     
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    
+
+    <ion-item>    
+    
+      <ion-text class="ion-padding-bottom">
+        <h1>Wähle ein Bild für dein Ziel</h1>Um niemals aus den Augen zu verlieren, warum du dein Ziel verfolgst ist es sinnvoll, es zu Visualieren mit einem Bild.</ion-text>         
+    </ion-item>    
+    <img [src]="croppedImagePath" *ngIf="croppedImagePath">
+
+  </ion-list>
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-button (click)="selectImage()"expand="block">Wähle ein Bild</ion-button>
+      <ion-button (click)="continue()" color="dark" expand="block">
+        Weiter
+      </ion-button>
+    </ion-col>
+  </ion-row>
+ 
+</ion-content>

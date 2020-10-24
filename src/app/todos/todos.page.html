@@ -1,100 +1,120 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>todos</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Todos</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+    <ion-item>
+        <ion-input type="text" placeholder="Enter Todo" [(ngModel)]="taskName">
+        </ion-input>
+        <ion-button fill="clear" size="default" (click)="showPicker()">Prio: {{prio}}</ion-button>
 
-  <ion-item>
-    <ion-input type="text" placeholder="Enter task" [(ngModel)]="taskName"></ion-input>
+        <div class="item-note" item-end>
+            <ion-button color="primary" (click)="addTask()">
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </div>
+    </ion-item>
+    <ion-toolbar>
+        <ion-segment color="secondary" (ionChange)="segmentChanged($event)" value="today">
+            <ion-segment-button value="today">
+                <ion-label>Heutige Todos </ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="planed">
+                <ion-label>Geplante Todos</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="sometime">
+                <ion-label>Ungeplante Todos </ion-label>
+            </ion-segment-button>
 
-    <div class="item-note" item-end>
-      <ion-button color="primary" (click)="addTask()">
-        <ion-icon name="add"></ion-icon>
-      </ion-button>
+        </ion-segment>
+
+    </ion-toolbar>
+
+    <div>
+        <ng-container *ngIf="state == 'today'">
+            <ion-list>
+                <ng-container *ngFor="let todo of taskList; let i=index">
+                    <ng-container *ngIf="!todo.done">
+                        <ion-item-sliding *ngIf="todo.state=='today'">
+                            <ion-item>
+                                <ion-label>
+                                    {{todo.name}}
+                                </ion-label>
+                                <ion-note slot="end">{{todo.prio}}</ion-note>
+                            </ion-item>
+                            <ion-item-options>
+                                <ion-item-option color="primary" (click)="deleteTask(i)">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+
+                                </ion-item-option>
+                                <ion-item-option color="secondary" (click)="openTodoModal(i)">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+
+                                </ion-item-option>
+                            </ion-item-options>
+                        </ion-item-sliding>
+                    </ng-container>
+                </ng-container>
+            </ion-list>
+        </ng-container>
+        <ng-container *ngIf="state == 'planed'">
+            <ion-list>
+                <ng-container *ngFor="let todo of taskList; let i=index">
+                    <ng-container *ngIf="!todo.done">
+                        <ion-item-sliding *ngIf="todo.state == 'planed'">
+                            <ion-item>
+                                <ion-label>
+                                    {{todo.name}}
+                                </ion-label>
+                                <ion-note slot="end">{{todo.prio}}</ion-note>
+                            </ion-item>
+                            <ion-item-options>
+                                <ion-item-option color="primary" (click)="deleteTask(i)">
+                                    <ion-icon name="checkmark-outline"></ion-icon>
+
+                                </ion-item-option>
+                                <ion-item-option color="secondary" (click)="openTodoModal(i)">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                </ion-item-option>
+                            </ion-item-options>
+                        </ion-item-sliding>
+
+
+                    </ng-container>
+                </ng-container>
+            </ion-list>
+        </ng-container>
+        <ng-container *ngIf="state == 'sometime'">
+            <ion-list>
+                <ng-container *ngFor="let todo of taskList; let i=index">
+                    <ng-container *ngIf="!todo.done">
+                        <ion-item-sliding *ngIf="todo.state == 'sometime'">
+                            <ion-item>
+                                <ion-label>
+                                    {{todo.name}}
+                                </ion-label>
+                                <ion-note slot="end">{{todo.prio}}</ion-note>
+                            </ion-item>
+                            <ion-item-options>
+                                <ion-item-option color="danger" (click)="deleteTask(i)">
+                                    <ion-icon name="trash"></ion-icon>
+                                </ion-item-option>
+                                <ion-item-option color="secondary" (click)="openTodoModal(i)">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                </ion-item-option>
+                            </ion-item-options>
+                        </ion-item-sliding>
+
+
+                    </ng-container>
+                </ng-container>
+            </ion-list>
+        </ng-container>
     </div>
-  </ion-item>
-  <ion-toolbar>
-    <ion-segment color="secondary" (ionChange)="segmentChanged($event)" value="today">
-      <ion-segment-button value="today">
-        <ion-label>Daylie todos </ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="planed">
-        <ion-label>Scheduled Todos</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="sometime">
-        <ion-label>Unscheduled Todos </ion-label>
-      </ion-segment-button>
-
-    </ion-segment>
-
-  </ion-toolbar>
-  <div>
-    <ng-container *ngIf="state == 'today'">
-      <ion-list>
-        <ng-container *ngFor="let todo of taskList; let i=index">
-          <ion-item *ngIf="todo.state=='today'">
-            {{todo.name}}
-            <div class=" item-note" slot="end">
-              <ion-button clear (click)="deleteTask(i)">
-                <ion-icon name="checkmark-outline"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="openTodoModal(i)">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="changeState(i)">
-                <ion-icon name="arrow-undo-outline"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-item>
-        </ng-container>
-      </ion-list>
-    </ng-container>
-    <ng-container *ngIf="state == 'planed'">
-      <ion-list>
-        <ng-container *ngFor="let todo of taskList; let i=index">
-          <ion-item *ngIf="todo.state == 'planed'">
-            {{todo.name}}
-            <div class="item-note" slot="end">
-              <ion-button clear (click)="deleteTask(i)">
-                <ion-icon name="checkmark-outline"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="openTodoModal(i)">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="changeState(i)">
-                <ion-icon name="arrow-undo-outline"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-item>
-        </ng-container>
-      </ion-list>
-    </ng-container>
-    <ng-container *ngIf="state == 'sometime'">
-      <ion-list>
-        <ng-container *ngFor="let todo of taskList; let i=index">
-          <ion-item *ngIf="todo.state == 'sometime'">
-            {{todo.name}}
-            <div class="item-note" slot="end">
-              <ion-button color="danger" clear (click)="deleteTask(i)">
-                <ion-icon name="trash"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="openTodoModal(i)">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" clear (click)="changeState(i)">
-
-                <ion-icon name="arrow-redo-outline"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-item>
-        </ng-container>
-      </ion-list>
-    </ng-container>
-  </div>
 </ion-content>

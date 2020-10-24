@@ -18,8 +18,9 @@ export class Goal {
   calItemId: string;
   todoIds: Array<string>;
   progress: number;
+  prio: number;
 
-  constructor(name: string, why: string, progress: number) {
+  constructor(name: string, why: string, progress: number, prio: number) {
 
     this.name = name;
     this.why = why;
@@ -28,6 +29,7 @@ export class Goal {
     this.activ = true
     this.id = uuidv4();
     this.progress = progress;
+    this.prio = prio;
   }
 
   addStep(step: GoalStep) {

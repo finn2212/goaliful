@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from './todo.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PickerController } from '@ionic/angular';
 import { CalModalPage } from '../calendar/cal-modal/cal-modal.page';
-import { CalenderService } from '../calendar/calender.service';
+import { PickerOptions } from "@ionic/core";
+
 
 @Component({
   selector: 'app-todos',
@@ -14,10 +15,13 @@ export class TodosPage implements OnInit {
   state: string;
   taskName: any = ''; // Entered Text
   taskList; // Array to store tasks
+  prio: number = 1;
 
+  prios: number[] = [1, 2, 3, 4, 5];
   constructor(
     private todoService: TodoService,
     private modalCtrl: ModalController,
+    private pickerController: PickerController
 
   ) {
     this.todoService.getTodosObservable().subscribe(res => {
@@ -30,15 +34,18 @@ export class TodosPage implements OnInit {
 
   ngOnInit() {
   }
+
+  ionViewWillEnter() {
+    console.log("settodostates")
+    this.todoService.setTodoStates();
+  }
   segmentChanged(ev: any) {
     console.log(ev.detail.value);
 
     this.state = ev.detail.value;
   }
 
-  changeState(index: number) {
-    this.todoService.changeState(index);
-  }
+
 
   // addTask Function
   // First we check if the text is entered or not in input box by verifying if length > 0
@@ -46,8 +53,10 @@ export class TodosPage implements OnInit {
   // After adding we reset the taskName
   addTask() {
     if (this.taskName.length > 0) {
-      this.todoService.addTodo(this.taskName, 'sometime');
+
+      this.todoService.addTodo(this.taskName, 'sometime', this.prio);
       this.taskName = "";
+      this.prio = 1;
     }
   }
   // deleteTask Function
@@ -57,6 +66,40 @@ export class TodosPage implements OnInit {
   deleteTask(index) {
     this.todoService.deleteTodo(index);
   }
+  async showPicker() {
+    let options: PickerOptions = {
+      buttons: [
+        {
+          text: "Cancel",
+          role: 'cancel'
+        },
+        {
+          text: 'Ok',
+          handler: (value: any) => {
+            this.prio = value.prios.value
+            console.log(value.prios.value);
+          }
+        }
+      ],
+      columns: [{
+        name: 'prios',
+        options: this.getColumnOptions()
+      }]
+    };
+
+    let picker = await this.pickerController.create(options);
+    picker.present()
+  }
+
+  getColumnOptions() {
+    let options = [];
+    this.prios.forEach(x => {
+      options.push({ text: x, value: x });
+    });
+    return options;
+  }
+
+
 
   async openTodoModal(index) {
     const modal = await this.modalCtrl.create({
