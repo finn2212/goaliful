@@ -8,18 +8,7 @@
 </ion-header>
 
 <ion-content>
-
-    <ion-item>
-        <ion-input type="text" placeholder="Enter Todo" [(ngModel)]="taskName">
-        </ion-input>
-        <ion-button fill="clear" size="default" (click)="showPicker()">Prio: {{prio}}</ion-button>
-
-        <div class="item-note" item-end>
-            <ion-button color="primary" (click)="addTask()">
-                <ion-icon name="add"></ion-icon>
-            </ion-button>
-        </div>
-    </ion-item>
+    <app-addtodo></app-addtodo>
     <ion-toolbar>
         <ion-segment color="secondary" (ionChange)="segmentChanged($event)" value="today">
             <ion-segment-button value="today">

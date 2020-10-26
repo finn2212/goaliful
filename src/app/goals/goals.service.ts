@@ -3,7 +3,7 @@ import { Goal } from '../models/goal';
 import { Storage } from '@ionic/storage';
 import { GoalStep } from '../models/goalStep';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CalenderService } from '../calendar/calender.service'
 import { Calitem } from '../models/calItem';
 import { Todo } from '../models/todo';
@@ -44,6 +44,14 @@ export class GoalsService {
 
   getGoalsObservable() {
     return this.goals.asObservable();
+  }
+
+
+
+
+  saveGoal(goalToedit) {
+
+
   }
 
 

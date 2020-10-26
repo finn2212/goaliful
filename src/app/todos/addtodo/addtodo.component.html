@@ -1,0 +1,11 @@
+<ion-item>
+  <ion-input type="text" placeholder="Enter Todo" ngDefaultControl [(ngModel)]="taskName">
+  </ion-input>
+  <ion-button fill="clear" size="default" (click)="showPicker()">Prio: {{prio}}</ion-button>
+
+  <div class="item-note" item-end>
+    <ion-button color="primary" (click)="addTask()">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </div>
+</ion-item>

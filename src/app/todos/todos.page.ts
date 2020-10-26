@@ -13,11 +13,11 @@ import { PickerOptions } from "@ionic/core";
 export class TodosPage implements OnInit {
 
   state: string;
-  taskName: any = ''; // Entered Text
-  taskList; // Array to store tasks
-  prio: number = 1;
 
-  prios: number[] = [1, 2, 3, 4, 5];
+  taskList; // Array to store tasks
+
+
+
   constructor(
     private todoService: TodoService,
     private modalCtrl: ModalController,
@@ -47,18 +47,7 @@ export class TodosPage implements OnInit {
 
 
 
-  // addTask Function
-  // First we check if the text is entered or not in input box by verifying if length > 0
-  // If length is greater than 0, then only we add taskName to taskList array
-  // After adding we reset the taskName
-  addTask() {
-    if (this.taskName.length > 0) {
 
-      this.todoService.addTodo(this.taskName, 'sometime', this.prio);
-      this.taskName = "";
-      this.prio = 1;
-    }
-  }
   // deleteTask Function
   // When user clicks the delete task button, this function is called with index i as parameter
   // Since tasks are added to taskList, we delete the task at index i using splice() array method
@@ -66,38 +55,7 @@ export class TodosPage implements OnInit {
   deleteTask(index) {
     this.todoService.deleteTodo(index);
   }
-  async showPicker() {
-    let options: PickerOptions = {
-      buttons: [
-        {
-          text: "Cancel",
-          role: 'cancel'
-        },
-        {
-          text: 'Ok',
-          handler: (value: any) => {
-            this.prio = value.prios.value
-            console.log(value.prios.value);
-          }
-        }
-      ],
-      columns: [{
-        name: 'prios',
-        options: this.getColumnOptions()
-      }]
-    };
 
-    let picker = await this.pickerController.create(options);
-    picker.present()
-  }
-
-  getColumnOptions() {
-    let options = [];
-    this.prios.forEach(x => {
-      options.push({ text: x, value: x });
-    });
-    return options;
-  }
 
 
 
