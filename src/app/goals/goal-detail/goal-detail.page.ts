@@ -8,7 +8,7 @@ import { TodoService } from 'src/app/todos/todo.service';
 import { Todo } from 'src/app/models/todo';
 import { PickerController } from '@ionic/angular';
 import { PickerOptions } from "@ionic/core";
-import { Observable } from 'rxjs';
+import { Category } from '../../models/category'
 
 @Component({
   selector: 'app-goal-detail',
@@ -30,6 +30,10 @@ export class GoalDetailPage implements OnInit {
   prio: number = 1;
   goals;
   prios: number[] = [1, 2, 3, 4, 5];
+  cats: any[] = [{ "text": " Arbeit und Karriere", "id": 1 }, { "text": " Gesundheit und Wohlbefinden", "id": 2 }, { "text": " Liebe Beziehung,", "id": 3 }, { "text": "Geld Finanzen", "id": 4 }, { "text": " Familie Freunde", "id": 5 }, { "text": "  Phychologisches Wohlbefinden,", "id": 6 }, { "text": " Freizeit Lebensstil,", "id": 7 }, { "text": " Persöhnliches Wachstum,", "id": 8 }, { "text": " Anderes Ziel,", "id": 9 }];
+
+
+
 
   constructor(private goalsService: GoalsService,
     private router: Router, private todoService: TodoService, private pickerController: PickerController
@@ -43,7 +47,10 @@ export class GoalDetailPage implements OnInit {
 
   }
 
-
+  chanceCategory() {
+    console.log("Categorie");
+    this.showCatPicker();
+  }
 
   ngOnInit() {
     this.selectedGoal = this.goalsService.selectedGoal;
@@ -54,15 +61,15 @@ export class GoalDetailPage implements OnInit {
   }
   ionViewWillEnter() {
     this.selectedGoal = this.goalsService.selectedGoal;
+    this.todoService.isGoalDeatail = true;
     this.getTodosFromGoal();
+    this.calcProceed()
     console.log(this.goals);
   }
-  saveGoal() {
-    //  this.goalsService.saveGoal(this.goal);
-    //  this.goal.name = this.GoalName;
-    //  this.goal = this.goalsService.selectedGoal;
-    console.log("saved")
+  ionViewWillLeave() {
+    this.todoService.isGoalDeatail = false;
   }
+
 
   async onSubmit(form: NgForm) {
     this.goalsService.newGoalSteps = this.steps;
@@ -81,6 +88,7 @@ export class GoalDetailPage implements OnInit {
     this.newTodoName = "";
     this.prio = 1;
     this.getTodosFromGoal();
+    this.calcProceed();
 
   }
   async showPicker() {
@@ -93,6 +101,7 @@ export class GoalDetailPage implements OnInit {
         {
           text: 'Ok',
           handler: (value: any) => {
+
             this.prio = value.prios.value
             console.log(value.prios.value);
           }
@@ -107,7 +116,6 @@ export class GoalDetailPage implements OnInit {
     let picker = await this.pickerController.create(options);
     picker.present()
   }
-
   getColumnOptions() {
     let options = [];
     this.prios.forEach(x => {
@@ -115,17 +123,46 @@ export class GoalDetailPage implements OnInit {
     });
     return options;
   }
+  async showCatPicker() {
+    let options: PickerOptions = {
+      buttons: [
+        {
+          text: "Cancel",
+          role: 'cancel'
+        },
+        {
+          text: 'Ok',
+          handler: (value: any) => {
+            this.goals.forEach(goal => {
+              if (this.selectedGoal.id === goal.id) {
+                goal.category = Category[value.cats.value];
+              }
+            });
 
+          }
+        }
+      ],
+      columns: [{
+        name: 'cats',
+        options: this.getColumnCatOptions()
+      }]
+    };
 
-
-
-  changeMode() {
-    this.mode = !this.mode;
-    if (!this.mode) {
-      this.saveGoal();
-    }
-    console.log(this.mode);
+    let picker = await this.pickerController.create(options);
+    picker.present()
   }
+  getColumnCatOptions() {
+    let options = [];
+    this.cats.forEach(x => {
+      options.push({ text: x.text, value: x.id });
+    });
+    return options;
+  }
+
+
+
+
+
   getTodosFromGoal() {
     if (this.selectedGoal) {
 
@@ -133,21 +170,25 @@ export class GoalDetailPage implements OnInit {
       this.done = 0;
       this.notDone = 0;
 
-      this.goalTodos.forEach(element => {
-        console.log(element);
-        if (element.done) {
-          this.done = this.done + 1;
-        } else {
-          this.notDone = this.notDone + 1
-        }
-
-      });
-      console.log(this.done);
-      console.log(this.notDone);
-
 
     }
   }
+  calcProceed() {
+    this.goalTodos.forEach(element => {
+      console.log(element);
+      if (element.done) {
+        this.done = this.done + 1;
+      } else {
+        this.notDone = this.notDone + 1
+      }
 
+    });
+    console.log(this.done);
+    console.log(this.notDone);
+
+
+  }
 
 }
+
+

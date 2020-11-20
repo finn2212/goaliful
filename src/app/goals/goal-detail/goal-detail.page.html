@@ -7,8 +7,6 @@
             <ion-back-button text="Back" [icon]="buttonIcon">
             </ion-back-button>
         </ion-buttons>
-        <ion-button *ngIf="!mode" (click)="changeMode()" fill="clear" slot="end">Bearbeiten</ion-button>
-        <ion-button *ngIf="mode" (click)="changeMode()" fill="clear" slot="end">Speichern</ion-button>
     </ion-toolbar>
 </ion-header>
 
@@ -18,29 +16,24 @@
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
                 <ion-item>
                     <ion-label position="stacked">Name des Ziels:</ion-label>
-                    <ion-label *ngIf="!mode" position="stacked">{{goal.name}}</ion-label>
-                    <ion-input *ngIf="mode" [(ngModel)]="goal.name"></ion-input>
+                    <ion-input [(ngModel)]="goal.name"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label position="stacked">Warum:</ion-label>
-                    <ion-label *ngIf="!mode" position="stacked">{{goal.why}}</ion-label>
-                    <ion-input *ngIf="mode" [(ngModel)]="goal.why"></ion-input>
+                    <ion-input [(ngModel)]="goal.why"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Kategorie:</ion-label>
-                    <ion-label *ngIf="!mode" position="stacked">{{goal.category}}</ion-label>
-                    <ion-input *ngIf="mode" [(ngModel)]="goal.category"></ion-input>
+                    <ion-label (click)="chanceCategory()">Kategorie: {{goal.category}}</ion-label>
+
                 </ion-item>
 
 
 
-                <ion-item-divider></ion-item-divider>
+
                 <ion-item>
-                    <ion-text>
-                        <p>Beschreibung:</p>
-                        <p>{{goal.desc}}</p>
-                    </ion-text>
+                    <ion-label position="floating">Beschreibung</ion-label>
+                    <ion-textarea [(ngModel)]="goal.desc"></ion-textarea>
                 </ion-item>
 
 

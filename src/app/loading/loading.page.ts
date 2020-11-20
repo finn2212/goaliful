@@ -41,8 +41,5 @@ export class LoadingPage implements OnInit {
     } else {
       this.router.navigateByUrl('/tabs/todos');
     }
-
   }
-
-
 }

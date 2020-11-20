@@ -19,6 +19,7 @@ export class TodoService {
   }
   taskList = new BehaviorSubject<Todo[]>([]);
   _todos;
+  isGoalDeatail = false;
 
   getTodosObservable() {
     return this.taskList.asObservable();
@@ -91,16 +92,7 @@ export class TodoService {
   updateTodos() {
     this.localDb.set('todos', this.taskList.getValue());
   }
-  loadToArry() {
-    if (this._todos) {
 
-      this._todos.forEach(element => {
-        this.taskList.getValue().push(element);
-      });
-
-    }
-    this.setTodoStates();
-  }
   deleteAllTodosFromGoal(goal: Goal) {
     console.log("elemente in der Liste:" + this.taskList.getValue().length);
 
@@ -164,6 +156,16 @@ export class TodoService {
         (order === 'desc') ? (comparison * -1) : comparison
       );
     };
+  }
+  loadToArry() {
+    if (this._todos) {
+
+      this._todos.forEach(element => {
+        this.taskList.getValue().push(element);
+      });
+
+    }
+    this.setTodoStates();
   }
 
   loadTodos() {
