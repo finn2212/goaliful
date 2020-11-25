@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { GoalsService } from '../goals.service'
 import { Router } from '@angular/router';
@@ -9,13 +9,16 @@ import { Todo } from 'src/app/models/todo';
 import { PickerController } from '@ionic/angular';
 import { PickerOptions } from "@ionic/core";
 import { Category } from '../../models/category'
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-goal-detail',
   templateUrl: './goal-detail.page.html',
   styleUrls: ['./goal-detail.page.scss'],
 })
-export class GoalDetailPage implements OnInit {
+export class GoalDetailPage implements OnInit, AfterViewInit {
+  @ViewChild('doughnutCanvas') private doughnutCanvas: ElementRef;
+
   GoalName;
   GoalWhy;
   steps = new Array<GoalStep>();
@@ -25,6 +28,7 @@ export class GoalDetailPage implements OnInit {
   goalTodos = new Array<Todo>();
   done = 0;
   notDone = 0;
+  doughnutChart: any;
 
   newTodoName = "";
   prio: number = 1;
@@ -46,6 +50,11 @@ export class GoalDetailPage implements OnInit {
 
 
   }
+  ngAfterViewInit(): void {
+    this.calcProceed();
+    
+  }
+  
 
   chanceCategory() {
     console.log("Categorie");
@@ -63,7 +72,8 @@ export class GoalDetailPage implements OnInit {
     this.selectedGoal = this.goalsService.selectedGoal;
     this.todoService.isGoalDeatail = true;
     this.getTodosFromGoal();
-    this.calcProceed()
+    this.calcProceed();
+    this.doughnutChartMethod();
     console.log(this.goals);
   }
   ionViewWillLeave() {
@@ -89,6 +99,7 @@ export class GoalDetailPage implements OnInit {
     this.prio = 1;
     this.getTodosFromGoal();
     this.calcProceed();
+    this.doughnutChartMethod();
 
   }
   async showPicker() {
@@ -188,7 +199,29 @@ export class GoalDetailPage implements OnInit {
 
 
   }
-
+  doughnutChartMethod() {
+    console.log("eledigt sind"+this.done)
+    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+      type: 'doughnut',
+      data: {
+        labels: ['Offene todos', 'Erledigte Todos'],
+        datasets: [{
+          label: '# of Votes',
+          data: [this.notDone,this.done],
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)'
+            
+          ],
+          hoverBackgroundColor: [
+            '#FFCE56',
+            '#FF6384'
+            
+          ]
+        }]
+      }
+    });
+  }
 }
 
 

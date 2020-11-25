@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { AuthService } from './auth/auth.service';
 import { CalenderService } from './calendar/calender.service';
-import { NgCalendarModule } from 'ionic2-calendar';
+import { CalendarComponent, NgCalendarModule } from 'ionic2-calendar';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from './shared/language.service';
 
@@ -18,6 +18,7 @@ import { LanguageService } from './shared/language.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
+  @ViewChild(CalendarComponent) myCal: CalendarComponent;
   private authSub: Subscription;
   private previousAuthState = false;
   public language: string;
